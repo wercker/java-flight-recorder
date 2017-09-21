@@ -37,7 +37,7 @@ fi
 if [[ -z "$WERCKER_JAVA_FLIGHT_RECORDER_CLASSPATH" ]]; then
     CLASSPATH=""
 else
-    CLASSPATH="-classpath $WERCER_JAVA_FLIGHT_RECORDER_CLASSPATH"
+    CLASSPATH="-classpath $WERCKER_JAVA_FLIGHT_RECORDER_CLASSPATH"
 fi
 
 # start the application under test

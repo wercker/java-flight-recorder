@@ -17,6 +17,7 @@ To use the step, add the step to your pipeline (`wercker.yml`) with the appropri
   steps:
     - java/java-flight-recorder:
         application: com.example.your.JavaApplication
+        classpath: my-awesome-app.jar
         duration: 60s
         filename: my-recording.jfr
         maxsize: 100M
