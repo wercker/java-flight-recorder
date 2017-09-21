@@ -5,6 +5,34 @@ keywords:
   - java
   - performance
 properties:
-  config:
+  application:
     type: string
     required: true
+  defaultrecording:
+    type: string
+    required: false
+  duration:
+    type: string
+    required: true
+  filename:
+    type: string
+    required: true
+  maxsize:
+    type: string
+    required: false
+  maxage:
+    type: string
+    required: false
+  delay:
+    type: string
+    required: false
+  compress:
+    type: string
+    required: false
+  dumponexit:
+    type: string
+    required: false
+  dumponexitpath:
+    type: string
+    required: false
+
