@@ -40,7 +40,7 @@ else
 fi
 
 # turn on experimental options if requested
-if [ "$WERCKER_JAVA_FLIGHT_RECORDER_EXPERIMENTAL" -eq "true" ]; then
+if [ "$WERCKER_JAVA_FLIGHT_RECORDER_EXPERIMENTAL" = "true" ]; then
   EXPERIMENTAL="-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap"
 else
   EXPERIMENTAL=""
@@ -61,9 +61,9 @@ PID=$!
 # start the recording
 $JAVA_HOME/bin/jcmd $PID JFR.start \
   duration=$WERCKER_JAVA_FLIGHT_RECORDER_DURATION \
-  filename=$WERCKER_JAVA_FLIGHT_RECORDER_FILENAME
+  filename=$WERCKER_JAVA_FLIGHT_RECORDER_FILENAME &
 
-# wait for the application to finish executing
+# wait for the application and the recording to finish
 wait
 
 # push the output to the next pipeline
