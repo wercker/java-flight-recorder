@@ -1,5 +1,5 @@
 name: java-flight-recorder
-version: 0.1.1
+version: 0.1.2
 description: Execute Java Flight Recorder and save the data for offline analysis.
 keywords:
   - java
