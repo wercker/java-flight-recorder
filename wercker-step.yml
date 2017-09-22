@@ -8,6 +8,15 @@ properties:
   application:
     type: string
     required: true
+  classpath:
+    type: string
+    required: false
+  java-opts:
+    type: string
+    required: false
+  experimental:
+    type: string
+    required: false
   defaultrecording:
     type: string
     required: false

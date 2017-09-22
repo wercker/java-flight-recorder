@@ -40,6 +40,9 @@ Parameters are optional unless specified otherwise.
 * `java_opts`
 <br>Used to specify any other java options needed to run the application.
 
+* `experimental`
+<br>If set to `true` will turn on experimental JVM options, specifically `-XX:+UnlockExperimentalVMOptions` and `-XX:+UseCGroupMemoryLimitForHeap`.  For other combinations, you should use `java_opts` to specify what you want.
+
 * `duration` (required)
 <br>The length of time to run the recording.
 

@@ -17,8 +17,7 @@ if [ -z "$JAVA_HOME" ] ; then
     ls=`ls -ld "$PRG"`
     link=`expr "$ls" : '.*-> \(.*\)$'`
     if expr "$link" : '/.*' > /dev/null; then
-      PRG="$link"
-    else
+      PRG="$link" else
       PRG="`dirname "$PRG"`/$link"
     fi
   done
@@ -40,10 +39,18 @@ else
     CLASSPATH="-classpath $WERCKER_JAVA_FLIGHT_RECORDER_CLASSPATH"
 fi
 
+# turn on experimental options if requested
+if [ "$WERCKER_JAVA_FLIGHT_RECORDER_EXPERIMENTAL" -eq "true" ]; then
+  EXPERIMENTAL="-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap"
+else
+  EXPERIMENTAL=""
+fi
+
 # start the application under test
 $JAVA_HOME/bin/java \
   -XX:+UnlockCommercialFeatures \
   -XX:+FlightRecorder \
+  $EXPERIMENTAL \
   $WERCKER_JAVA_FLIGHT_RECORDER_JAVA_OPTS \
   $CLASSPATH \
   $WERCKER_JAVA_FLIGHT_RECORDER_APPLICATION &
@@ -55,4 +62,10 @@ PID=$!
 $JAVA_HOME/bin/jcmd $PID JFR.start \
   duration=$WERCKER_JAVA_FLIGHT_RECORDER_DURATION \
   filename=$WERCKER_JAVA_FLIGHT_RECORDER_FILENAME
+
+# wait for the application to finish executing
+wait
+
+# push the output to the next pipeline
+cp $WERCKER_JAVA_FLIGHT_RECOREDER_FILENAME /pipeline/output
 
