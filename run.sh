@@ -50,16 +50,23 @@ fi
 # start the application under test
 APPCMD="$JAVA_HOME/bin/java -XX:+UnlockCommercialFeatures -XX:+FlightRecorder $CLASSPATH $EXPERIMENTAL $WERCKER_JAVA_FLIGHT_RECORDER_JAVA_OPTS $WERCKER_JAVA_FLIGHT_RECORDER_APPLICATION"
 
-echo "The command is: $APPCMD"
+echo "The app command is: $APPCMD"
 $APPCMD &
 
 #save the Process ID
 PID=$!
 
+if [[ -z "$WERCKER_JAVA_FLIGHT_RECORDER_DELAY" ]]; then
+  DELAY="-delay $WERCKER_JAVA_FLIGHT_RECORDER_DELAY"
+else
+  DELAY = ""
+fi
+
 # start the recording
-$JAVA_HOME/bin/jcmd $PID JFR.start \
-  duration=$WERCKER_JAVA_FLIGHT_RECORDER_DURATION \
-  filename=$WERCKER_JAVA_FLIGHT_RECORDER_FILENAME &
+JFRCMD="$JAVA_HOME/bin/jcmd $PID JFR.start duration=$WERCKER_JAVA_FLIGHT_RECORDER_DURATION $DELAY filename=$WERCKER_JAVA_FLIGHT_RECORDER_FILENAME"
+
+echo "The JFR command is: $JFRCMD"
+$JFRCMD &
 
 # wait for the application and the recording to finish
 wait
