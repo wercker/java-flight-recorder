@@ -107,19 +107,24 @@ PIDS+=($!)
 # Get ready to run the load driver
 #
 
-# check if any classpath entries were provided
-if [[ -z "$WERCKER_JAVA_FLIGHT_RECORDER_DRIVER_CLASSPATH" ]]; then
-    DRIVER_CLASSPATH=""
+if [[ -z "$WERCKER_JAVA_FLIGHT_RECORDER_DRIVER" ]]; then
+  echo "You did not provide a load driver, so I will not try to start one"
 else
-    DRIVER_CLASSPATH="-classpath $WERCKER_JAVA_FLIGHT_RECORDER_DRIVER_CLASSPATH"
+
+    # check if any classpath entries were provided
+    if [[ -z "$WERCKER_JAVA_FLIGHT_RECORDER_DRIVER_CLASSPATH" ]]; then
+        DRIVER_CLASSPATH=""
+    else
+        DRIVER_CLASSPATH="-classpath $WERCKER_JAVA_FLIGHT_RECORDER_DRIVER_CLASSPATH"
+    fi
+
+    echo "$(date +%H:%M:%S): Starting the load driver..."
+    DRIVERCMD="$JAVA_HOME/bin/java $DRIVER_CLASSPATH $WERCKER_JAVA_FLIGHT_RECORDER_DRIVER_JAVA_OPTS $EXPERIMENTAL $WERCKER_JAVA_FLIGHT_RECORDER_DRIVER"
+
+    echo "The load driver command is: $DRIVERCMD"
+    $TIMEOUT $DRIVERCMD &
+    PIDS+=($!)
 fi
-
-echo "$(date +%H:%M:%S): Starting the load driver..."
-DRIVERCMD="$JAVA_HOME/bin/java $DRIVER_CLASSPATH $WERCKER_JAVA_FLIGHT_RECORDER_DRIVER_JAVA_OPTS $EXPERIMENTAL $WERCKER_JAVA_FLIGHT_RECORDER_DRIVER"
-
-echo "The load driver command is: $DRIVERCMD"
-$TIMEOUT $DRIVERCMD &
-PIDS+=($!)
 
 #
 # Get ready to start the flight recorder
