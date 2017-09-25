@@ -47,13 +47,16 @@ else
 fi
 
 # start the application under test
-$JAVA_HOME/bin/java \
+APPCMD=$JAVA_HOME/bin/java \
   -XX:+UnlockCommercialFeatures \
   -XX:+FlightRecorder \
   $CLASSPATH \
   $EXPERIMENTAL \
   $WERCKER_JAVA_FLIGHT_RECORDER_JAVA_OPTS \
-  $WERCKER_JAVA_FLIGHT_RECORDER_APPLICATION &
+  $WERCKER_JAVA_FLIGHT_RECORDER_APPLICATION 
+
+echo "The command is: $APPCMD"
+$APPCMD &
 
 #save the Process ID
 PID=$!
