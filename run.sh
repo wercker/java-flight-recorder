@@ -31,6 +31,7 @@ if [ -z "$JAVA_HOME" ] ; then
 
   cd "$saveddir"
 fi
+echo "JAVA_HOME is $JAVA_HOME"
 
 # check if any classpath entries were provided
 if [[ -z "$WERCKER_JAVA_FLIGHT_RECORDER_CLASSPATH" ]]; then
