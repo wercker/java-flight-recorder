@@ -89,7 +89,7 @@ fi
 if [[ -z "$WERCKER_JAVA_FLIGHT_RECORDER_TIMEOUT" ]]; then
   TIMEOUT=""
 else
-  TIMEOUT="timeout -l $WERCKER_JAVA_FLIGHT_RECORDER_TIMEOUT $WERCKER_JAVA_FLIGHT_RECORDER_TIMEOUT "
+  TIMEOUT="timeout -k $WERCKER_JAVA_FLIGHT_RECORDER_TIMEOUT $WERCKER_JAVA_FLIGHT_RECORDER_TIMEOUT "
 
 # start the application under test
 echo "$(date +%H:%M:%S): Starting the application under test..."
