@@ -172,8 +172,8 @@ wait "${PIDS[@]}"
 
 # check if the recording is still running
 if ! pgreg $JFRPID > /dev/null; then
-  $JAVA_HOME/bin/jcmd $PID JFR.dump
-  $JAVA_HOME/bin/jcmd $PID JFR.stop
+  $JAVA_HOME/bin/jcmd ${PIDS[0]} JFR.dump
+  $JAVA_HOME/bin/jcmd ${PIDS[0]} JFR.stop
 fi
 
 # push the output to the next pipeline
