@@ -42,7 +42,7 @@ Parameters are optional unless specified otherwise.
 Global parameters:
 
 * `timeout`
-<br>If the application or load driver have not finished after the specified number of seconds, then they will be terminated.
+<br>If the application or load driver have not finished after the specified number of seconds, then they will be terminated.  Append the letter `s` to indicate seconds, `m` to indicate minutes, `h` to indicate hours, or `d` to indicate days.
 
 Parameters that describe the application under test:
 

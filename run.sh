@@ -160,6 +160,7 @@ JFRPID=$!
 #
 
 # wait for the application and the recording to finish
+# note that timeout will kill them if they go over the specified timeout
 echo "Waiting for the application and load driver to finish..."
 wait "${PIDS[@]}"
 
