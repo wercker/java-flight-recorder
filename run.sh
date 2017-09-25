@@ -81,7 +81,6 @@ APPCMD="$JAVA_HOME/bin/java -XX:+UnlockCommercialFeatures -XX:+FlightRecorder $C
 echo "The app command is: $APPCMD"
 $TIMEOUT $APPCMD &
 APPPID=$!
-echo "App PID is $APPPID"
 
 #
 # Get ready to run the load driver
@@ -104,7 +103,6 @@ else
     echo "The load driver command is: $DRIVERCMD"
     $TIMEOUT $DRIVERCMD &
     DRIVERPID=$!
-    echo "Driver PID is $DRIVERPID"
 fi
 
 #
@@ -137,7 +135,7 @@ fi
 
 # start the recording
 echo "Starting Java Flight Recorder..."
-JFRCMD="$JAVA_HOME/bin/jcmd $APPPID JFR.start duration=$WERCKER_JAVA_FLIGHT_RECORDER_DURATION filename=$WERCKER_JAVA_FLIGHT_RECORDER_FILENAME $DELAY $MAXSIZE $MAXAGE $COMPRESS "
+JFRCMD="$JAVA_HOME/bin/jcmd $WERCKER_JAVA_FLIGHT_RECORDER_APPLICATION JFR.start duration=$WERCKER_JAVA_FLIGHT_RECORDER_DURATION filename=$WERCKER_JAVA_FLIGHT_RECORDER_FILENAME $DELAY $MAXSIZE $MAXAGE $COMPRESS "
 
 echo "The JFR command is: $JFRCMD"
 $JFRCMD &
@@ -161,8 +159,8 @@ wait "${PIDS[@]}"
 
 # check if the recording is still running
 if ! pgrep $JFRPID > /dev/null; then
-  $JAVA_HOME/bin/jcmd $APPPID JFR.dump
-  $JAVA_HOME/bin/jcmd $APPPID JFR.stop
+  $JAVA_HOME/bin/jcmd $WERCKER_JAVA_FLIGHT_RECORDER_APPLICATION JFR.dump
+  $JAVA_HOME/bin/jcmd $WERCKER_JAVA_FLIGHT_RECORDER_APPLICATION JFR.stop
 fi
 
 # push the output to the next pipeline
