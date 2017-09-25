@@ -158,7 +158,8 @@ wait "${PIDS[@]}"
 #
 
 # check if the recording is still running
-if ! pgrep $JFRPID > /dev/null; then
+RUNNING=`$JAVA_HOME/bin/jcmd | grep $JFRPID | wc | awk ' { print $1; } '`
+if [ "$RUNNING" == "1" ]; then
   $JAVA_HOME/bin/jcmd $WERCKER_JAVA_FLIGHT_RECORDER_APPLICATION JFR.dump
   $JAVA_HOME/bin/jcmd $WERCKER_JAVA_FLIGHT_RECORDER_APPLICATION JFR.stop
 fi
