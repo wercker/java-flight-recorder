@@ -47,6 +47,7 @@ fi
 if [[ -z "$JAVA_HOME" ]]; then
   echo "Could not find Java in this box - please make sure you have Oracle JDK installed"
   exit 8
+fi
 echo "Found JAVA_HOME at $JAVA_HOME"
 
 #
