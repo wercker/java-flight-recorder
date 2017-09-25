@@ -152,6 +152,7 @@ PIDS=()
 PIDS+=$APPPID
 PIDS+=$DRIVERPID
 wait "${PIDS[@]}"
+echo ""
 
 #
 # tell JFR to save and stop (if it has not already)
