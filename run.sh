@@ -59,7 +59,7 @@ PID=$!
 if [[ -z "$WERCKER_JAVA_FLIGHT_RECORDER_DELAY" ]]; then
   DELAY=""
 else
-  DELAY="-delay $WERCKER_JAVA_FLIGHT_RECORDER_DELAY"
+  DELAY="delay $WERCKER_JAVA_FLIGHT_RECORDER_DELAY"
 fi
 
 # start the recording
