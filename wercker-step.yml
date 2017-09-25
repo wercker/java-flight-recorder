@@ -1,5 +1,5 @@
 name: java-flight-recorder
-version: 0.1.19
+version: 0.1.21
 description: Execute Java Flight Recorder and save the data for offline analysis.
 keywords:
   - java
@@ -11,10 +11,19 @@ properties:
   classpath:
     type: string
     required: false
-  java-opts:
+  java_opts:
     type: string
     required: false
   experimental:
+    type: string
+    required: false
+  driver:
+    type: string
+    required: false
+  driver_classpath:
+    type: string
+    required: false
+  driver_java_opts:
     type: string
     required: false
   defaultrecording:
