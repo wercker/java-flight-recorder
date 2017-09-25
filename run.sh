@@ -50,9 +50,9 @@ fi
 $JAVA_HOME/bin/java \
   -XX:+UnlockCommercialFeatures \
   -XX:+FlightRecorder \
+  $CLASSPATH \
   $EXPERIMENTAL \
   $WERCKER_JAVA_FLIGHT_RECORDER_JAVA_OPTS \
-  $CLASSPATH \
   $WERCKER_JAVA_FLIGHT_RECORDER_APPLICATION &
 
 #save the Process ID
