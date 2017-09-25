@@ -89,12 +89,6 @@ Parameters that control the Java Flight Recording options:
 * `compress`
 <br>Compress the output in ZIP format. Note that CPU resources are required for the compression, which can negatively impact performance.
 
-* `dumponexit`
-<br>If set to `true`, will dump the current recording data to file if the JVM terminates. 
-
-* `dumponexitpath`
-<br>The filename to save the recording data when the JVM exits.
-
 After the step has completed, the recording file and/or dump file will be available.  You can open the file in Java Mission Control to view the recorded data. You can start Java Mission Control with the command:
 
 `$JAVA_HOME/bin/jmc &` 

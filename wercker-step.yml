@@ -47,10 +47,5 @@ properties:
   compress:
     type: string
     required: false
-  dumponexit:
-    type: string
-    required: false
-  dumponexitpath:
-    type: string
-    required: false
+
 

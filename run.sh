@@ -71,24 +71,6 @@ else
   EXPERIMENTAL=""
 fi
 
-if [[ -z "$WERCKER_JAVA_FLIGHT_RECORDER_DUMPONEXIT" ]]; then
-  DUMPONEXIT=""
-else
-  DUMPONEXIT="dumponexit=$WERCKER_JAVA_FLIGHT_RECORDER_DUMPONEXIT"
-fi
-
-if [[ -z "$WERCKER_JAVA_FLIGHT_RECORDER_DUMPONEXITPATH" ]]; then
-  DUMPONEXITPATH=""
-else
-  DUMPONEXITPATH="dumponexitpath=$WERCKER_JAVA_FLIGHT_RECORDER_DUMPONEXITPATH"
-fi
-
-if [[ -z "$DUMPONEXIT" && -z "$DUMPONEXITPATH" ]]; then
-  JFR_OPTS=""
-else
-  JFR_OPTS="-XX:FlightRecorderOptions=$DUMPONEXIT,$DUMPONEXITPATH"
-fi
-
 if [[ -z "$WERCKER_JAVA_FLIGHT_RECORDER_TIMEOUT" ]]; then
   TIMEOUT=""
 else
@@ -97,7 +79,7 @@ fi
 
 # start the application under test
 echo "$(date +%H:%M:%S): Starting the application under test..."
-APPCMD="$JAVA_HOME/bin/java -XX:+UnlockCommercialFeatures -XX:+FlightRecorder $JFR_OPTS $CLASSPATH $EXPERIMENTAL $WERCKER_JAVA_FLIGHT_RECORDER_JAVA_OPTS $WERCKER_JAVA_FLIGHT_RECORDER_APPLICATION"
+APPCMD="$JAVA_HOME/bin/java -XX:+UnlockCommercialFeatures -XX:+FlightRecorder $CLASSPATH $EXPERIMENTAL $WERCKER_JAVA_FLIGHT_RECORDER_JAVA_OPTS $WERCKER_JAVA_FLIGHT_RECORDER_APPLICATION"
 
 echo "The app command is: $APPCMD"
 $TIMEOUT $APPCMD &
@@ -186,8 +168,5 @@ fi
 # push the output to the next pipeline
 echo "Saving the recordings..."
 cp $WERCKER_JAVA_FLIGHT_RECORDER_FILENAME /pipeline/output
-if [ -e $WERCKER_JAVA_FLIGHT_RECOREDER_DUMPONEXIT ]; then 
-  cp $WERCKER_JAVA_FLIGHT_RECORDER_DUMPONEXITPATH /pipeline/output
-fi
 
 echo "Java Flight Recorder Wercker Step Finished"
