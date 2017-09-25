@@ -101,9 +101,8 @@ APPCMD="$JAVA_HOME/bin/java -XX:+UnlockCommercialFeatures -XX:+FlightRecorder $J
 
 echo "The app command is: $APPCMD"
 $TIMEOUT $APPCMD &
-
-#save the Process ID
 PIDS+=($!)
+sleep 2
 
 #
 # Get ready to run the load driver
@@ -126,6 +125,7 @@ else
     echo "The load driver command is: $DRIVERCMD"
     $TIMEOUT $DRIVERCMD &
     PIDS+=($!)
+    sleep 2
 fi
 
 #
