@@ -5,9 +5,6 @@ echo "Hello from the Java Flight Recorder Wercker Step"
 echo "For information on how to use this step, please review the documentation in the Wercker Marketplace,"
 echo "or visit https://github.com/wercker/java-flight-recorder"
 
-# create variable to hold process IDs (used later)
-PIDS=()
-
 # check that all of the required parameters were provided
 # note that wercker does not enforce this for us, so we have to check
 if [[ -z "$WERCKER_JAVA_FLIGHT_RECORDER_APPLICATION" || -z "$WERCKER_JAVA_FLIGHT_RECORDER_FILENAME" || -z "$WERCKER_JAVA_FLIGHT_RECORDER_DURATION" ]]; then
@@ -83,8 +80,7 @@ APPCMD="$JAVA_HOME/bin/java -XX:+UnlockCommercialFeatures -XX:+FlightRecorder $C
 
 echo "The app command is: $APPCMD"
 $TIMEOUT $APPCMD &
-PIDS+=($!)
-sleep 2
+APPPID=$!
 
 #
 # Get ready to run the load driver
@@ -106,8 +102,7 @@ else
 
     echo "The load driver command is: $DRIVERCMD"
     $TIMEOUT $DRIVERCMD &
-    PIDS+=($!)
-    sleep 2
+    DRIVERPID=$!
 fi
 
 #
@@ -140,7 +135,7 @@ fi
 
 # start the recording
 echo "Starting Java Flight Recorder..."
-JFRCMD="$JAVA_HOME/bin/jcmd ${PIDS[0]} JFR.start duration=$WERCKER_JAVA_FLIGHT_RECORDER_DURATION $DELAY $MAXSIZE $MAXAGE $COMPRESS filename=$WERCKER_JAVA_FLIGHT_RECORDER_FILENAME"
+JFRCMD="$JAVA_HOME/bin/jcmd $APPPID JFR.start duration=$WERCKER_JAVA_FLIGHT_RECORDER_DURATION $DELAY $MAXSIZE $MAXAGE $COMPRESS filename=$WERCKER_JAVA_FLIGHT_RECORDER_FILENAME"
 
 echo "The JFR command is: $JFRCMD"
 $JFRCMD &
@@ -153,6 +148,9 @@ JFRPID=$!
 # wait for the application and the recording to finish
 # note that timeout will kill them if they go over the specified timeout
 echo "Waiting for the application and load driver to finish..."
+PIDS=()
+PIDS+=$APPPID
+PIDS+=$DRIVERPID
 wait "${PIDS[@]}"
 
 #
