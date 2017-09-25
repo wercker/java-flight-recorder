@@ -103,4 +103,5 @@ wait
 
 # push the output to the next pipeline
 cp $WERCKER_JAVA_FLIGHT_RECORDER_FILENAME /pipeline/output
+cp $WERCKER_JAVA_FLIGHT_RECORDER_DUMPONEXITPATH /pipeline/output
 
