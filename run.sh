@@ -5,6 +5,9 @@ echo "Hello from the Java Flight Recorder Wercker Step"
 echo "For information on how to use this step, please review the documentation in the Wercker Marketplace,"
 echo "or visit https://github.com/wercker/java-flight-recorder"
 
+# create variable to hold process IDs (used later)
+PIDS=()
+
 # check that all of the required parameters were provided
 # note that wercker does not enforce this for us, so we have to check
 if [[ -z "$WERCKER_JAVA_FLIGHT_RECORDER_APPLICATION" || -z "$WERCKER_JAVA_FLIGHT_RECORDER_FILENAME" || -z "$WERCKER_JAVA_FLIGHT_RECORDER_DURATION" ]]; then
@@ -100,7 +103,6 @@ echo "The app command is: $APPCMD"
 $TIMEOUT $APPCMD &
 
 #save the Process ID
-PIDS=()
 PIDS+=($!)
 
 #
