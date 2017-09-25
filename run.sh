@@ -64,5 +64,5 @@ $JAVA_HOME/bin/jcmd $PID JFR.start \
 wait
 
 # push the output to the next pipeline
-cp $WERCKER_JAVA_FLIGHT_RECOREDER_FILENAME /pipeline/output
+cp $WERCKER_JAVA_FLIGHT_RECORDER_FILENAME /pipeline/output
 
