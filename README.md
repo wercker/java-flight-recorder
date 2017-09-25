@@ -62,5 +62,7 @@ Parameters are optional unless specified otherwise.
 <br>Compress the output in ZIP format. Note that CPU resources are required for the compression, which can negatively impact performance.
 
 * `dumponexit`
+<br>Dump the current recording data to file if the JVM exits for any reason. 
 
 * `dumponexitpath`
+<br>The filename to save the recording data when the JVM exits.
