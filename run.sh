@@ -1,14 +1,14 @@
 #!/bin/bash
 # Copyright 2017, Oracle and/or its affliates. All rights reserved. 
 
-echo "Hello from the Java Flight Recorder Wercker Step"
+echo "$(date +%H:%M:%S):  Hello from the Java Flight Recorder Wercker Step"
 echo "For information on how to use this step, please review the documentation in the Wercker Marketplace,"
 echo "or visit https://github.com/wercker/java-flight-recorder"
 
 # check that all of the required parameters were provided
 # note that wercker does not enforce this for us, so we have to check
 if [[ -z "$WERCKER_JAVA_FLIGHT_RECORDER_APPLICATION" || -z "$WERCKER_JAVA_FLIGHT_RECORDER_FILENAME" || -z "$WERCKER_JAVA_FLIGHT_RECORDER_DURATION" ]]; then
-  echo "All required parameters: application, filename, and duration MUST be specified"
+  echo "$(date +%H:%M:%S): All required parameters: application, filename, and duration MUST be specified"
   exit 9
 fi
 
@@ -45,10 +45,10 @@ if [ -z "$JAVA_HOME" ] ; then
 fi
 
 if [[ -z "$JAVA_HOME" ]]; then
-  echo "Could not find Java in this box - please make sure you have Oracle JDK installed"
+  echo "$(date +%H:%M:%S): Could not find Java in this box - please make sure you have Oracle JDK installed"
   exit 8
 fi
-echo "Found JAVA_HOME at $JAVA_HOME"
+echo "$(date +%H:%M:%S): Found JAVA_HOME at $JAVA_HOME"
 
 #
 #  Get ready to run the application under test
@@ -87,7 +87,7 @@ APPPID=$!
 #
 
 if [[ -z "$WERCKER_JAVA_FLIGHT_RECORDER_DRIVER" ]]; then
-  echo "You did not provide a load driver, so I will not try to start one"
+  echo "$(date +%H:%M:%S): You did not provide a load driver, so I will not try to start one"
 else
 
     # check if any classpath entries were provided
@@ -97,10 +97,10 @@ else
         DRIVER_CLASSPATH="-classpath $WERCKER_JAVA_FLIGHT_RECORDER_DRIVER_CLASSPATH"
     fi
 
-    echo "Starting the load driver..."
+    echo "$(date +%H:%M:%S): Starting the load driver..."
     DRIVERCMD="$JAVA_HOME/bin/java $DRIVER_CLASSPATH $WERCKER_JAVA_FLIGHT_RECORDER_DRIVER_JAVA_OPTS $EXPERIMENTAL $WERCKER_JAVA_FLIGHT_RECORDER_DRIVER"
 
-    echo "The load driver command is: $DRIVERCMD"
+    echo "$(date +%H:%M:%S): The load driver command is: $DRIVERCMD"
     $TIMEOUT $DRIVERCMD &
     DRIVERPID=$!
 fi
@@ -134,10 +134,10 @@ else
 fi
 
 # start the recording
-echo "Starting Java Flight Recorder..."
+echo "$(date +%H:%M:%S): Starting Java Flight Recorder..."
 JFRCMD="$JAVA_HOME/bin/jcmd $WERCKER_JAVA_FLIGHT_RECORDER_APPLICATION JFR.start duration=$WERCKER_JAVA_FLIGHT_RECORDER_DURATION filename=$WERCKER_JAVA_FLIGHT_RECORDER_FILENAME $DELAY $MAXSIZE $MAXAGE $COMPRESS "
 
-echo "The JFR command is: $JFRCMD"
+echo "$(date +%H:%M:%S): The JFR command is: $JFRCMD"
 $JFRCMD &
 JFRPID=$!
 
@@ -147,7 +147,7 @@ JFRPID=$!
 
 # wait for the application and the recording to finish
 # note that timeout will kill them if they go over the specified timeout
-echo "Waiting for the application and load driver to finish..."
+echo "$(date +%H:%M:%S): Waiting for the application and load driver to finish..."
 PIDS=()
 PIDS+=$APPPID
 PIDS+=$DRIVERPID
@@ -165,7 +165,7 @@ if [ "$RUNNING" == "1" ]; then
 fi
 
 # push the output to the next pipeline
-echo "Saving the recordings..."
+echo "$(date +%H:%M:%S): Saving the recordings..."
 cp $WERCKER_JAVA_FLIGHT_RECORDER_FILENAME /pipeline/output
 
-echo "Java Flight Recorder Wercker Step Finished"
+echo "$(date +%H:%M:%S): Java Flight Recorder Wercker Step Finished"
