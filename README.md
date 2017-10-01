@@ -1,9 +1,6 @@
 # Java Flight Recorder Step for Wercker
-This project provides a Wercker Step to run Java Flight Recorder standalone, i.e. outside of a build tool like Maven or Gradle.
 
-
-__Note:__ Java Flight Recorder requires a commercial license for use in production. To learn more about commercial features and how to enable them please visit [http://www.oracle.com/technetwork/java/javaseproducts](http://www.oracle.com/technetwork/java/javaseproducts).
-
+An official Wercker step to run Java Flight Recorder standalone, i.e. outside of a build tool like Maven or Gradle.
 
 ## Requirements
 
