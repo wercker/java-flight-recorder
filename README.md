@@ -94,4 +94,4 @@ Then you can select `File/Open File...` from the main menu and choose your recor
 
 ![sample screen](doc/jfr-sample.jpg)
 
-A sample application is provided on GitHub that demonstrates how to use this Wercker Step.  For more information, please review that sample application at [https://github.com/java/sample-jfr-step](https://github.com/java/sample-jfr-step).
+A sample application is provided on GitHub that demonstrates how to use this Wercker Step.  For more information, please review that sample application at [https://github.com/markxnelson/sample-jfr-step](https://github.com/markxnelson/sample-jfr-step).
