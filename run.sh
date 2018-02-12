@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright 2017, Oracle and/or its affliates. All rights reserved. 
+# Copyright 2017, 2018, Oracle and/or its affliates. All rights reserved. 
 
 echo "$(date +%H:%M:%S):  Hello from the Java Flight Recorder Wercker Step"
 echo "For information on how to use this step, please review the documentation in the Wercker Marketplace,"
@@ -8,8 +8,7 @@ echo "or visit https://github.com/wercker/java-flight-recorder"
 # check that all of the required parameters were provided
 # note that wercker does not enforce this for us, so we have to check
 if [[ -z "$WERCKER_JAVA_FLIGHT_RECORDER_APPLICATION" || -z "$WERCKER_JAVA_FLIGHT_RECORDER_FILENAME" || -z "$WERCKER_JAVA_FLIGHT_RECORDER_DURATION" ]]; then
-  echo "$(date +%H:%M:%S): All required parameters: application, filename, and duration MUST be specified"
-  exit 9
+  fail "$(date +%H:%M:%S): All required parameters: application, filename, and duration MUST be specified"
 fi
 
 # try to find Java
@@ -45,8 +44,7 @@ if [ -z "$JAVA_HOME" ] ; then
 fi
 
 if [[ -z "$JAVA_HOME" ]]; then
-  echo "$(date +%H:%M:%S): Could not find Java in this box - please make sure you have Oracle JDK installed"
-  exit 8
+  fail "$(date +%H:%M:%S): Could not find Java in this box - please make sure you have Oracle JDK installed"
 fi
 echo "$(date +%H:%M:%S): Found JAVA_HOME at $JAVA_HOME"
 
